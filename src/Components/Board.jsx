@@ -15,7 +15,7 @@ export const Board = () => {
       [0, 4, 8],
       [2, 4, 6],
     ];
-
+    let isFieldEmpty = false;
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
@@ -25,13 +25,15 @@ export const Board = () => {
       ) {
         return squares[a];
       }
+      else if(!squares[a] || !squares[b] || !squares[c]) isFieldEmpty = true;
     }
-    return null;
+    return isFieldEmpty ? null : 'drawn';
   };
 
   const winner = calculateWinner(squares);
   let status;
-  if (winner) {
+  if(winner === 'drawn') status = 'Match Drawn';
+  else if (winner) {
     status = "Winner : " + winner;
   } else {
     status = "Next Player : " + (xIsNext ? "X" : "O");
